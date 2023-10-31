@@ -121,7 +121,7 @@ static int parse_args(int argc, char **argv, int *input_channel, int *output_cha
 /*----------------------------------------------------------------------------
  * DMA File Transfer Functions
  *----------------------------------------------------------------------------*/
-static int transfer_from_stdio(axidma_dev_t dev, truct dma_transfer *trans)
+static int transfer_from_stdio(axidma_dev_t dev, struct dma_transfer *trans)
 {
     //本函数先循环从标准输入中读取单精度浮点数，然后将读取到的数据写入到DMA的输入通道中
     //然后从DMA的输出通道中读取数据，将数据写入到标准输出中
