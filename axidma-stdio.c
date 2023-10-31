@@ -125,6 +125,7 @@ static int transfer_from_stdio(axidma_dev_t dev, struct dma_transfer *trans)
 {
     //本函数先循环从标准输入中读取单精度浮点数，然后将读取到的数据写入到DMA的输入通道中
     //然后从DMA的输出通道中读取数据，将数据写入到标准输出中
+    #define MAX_FLOATS 1000
     int rc;
     float input;
     char *bytes = (char *)malloc(MAX_FLOATS * sizeof(float));
@@ -178,7 +179,7 @@ static int transfer_from_stdio(axidma_dev_t dev, struct dma_transfer *trans)
     }
 
     for (size_t i = 0; i < size; i++) {
-        printf("Output Byte %zu: %02x\n", i, trans->output_buf[i] & 0xff);
+        printf("Output Byte %zu: %02x\n", i, (char *)trans->output_buf[i] & 0xff);
     }
     
 free_output_buf:
