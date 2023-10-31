@@ -260,21 +260,6 @@ int main(int argc, char **argv)
         goto ret;
     }
 
-    // Try opening the input and output images
-    trans.input_fd = open(input_path, O_RDONLY);
-    if (trans.input_fd < 0) {
-        perror("Error opening input file");
-        rc = 1;
-        goto ret;
-    }
-    trans.output_fd = open(output_path, O_WRONLY|O_CREAT|O_TRUNC,
-                     S_IWUSR|S_IRUSR|S_IRGRP|S_IWGRP|S_IROTH);
-    if (trans.output_fd < 0) {
-        perror("Error opening output file");
-        rc = -1;
-        goto close_input;
-    }
-
     // Initialize the AXIDMA device
     axidma_dev = axidma_init();
     if (axidma_dev == NULL) {
