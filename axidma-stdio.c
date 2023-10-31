@@ -128,6 +128,7 @@ static int transfer_from_stdio(axidma_dev_t dev, struct dma_transfer *trans)
     #define MAX_FLOATS 1000
     int rc;
     float input;
+    float output;
     char *bytes = (char *)malloc(MAX_FLOATS * sizeof(float));
     
     size_t size = 0;
@@ -182,6 +183,10 @@ static int transfer_from_stdio(axidma_dev_t dev, struct dma_transfer *trans)
     memcpy(output_bytes, trans->output_buf, trans->output_size);
     for (size_t i = 0; i < size; i++) {
         printf("Output Byte %zu: %02x\n", i, output_bytes[i] & 0xff);
+    }
+    for (size_t i = 0; i < size; i += sizeof(float)) {
+        memcpy(&output, output_bytes + i, sizeof(float));
+        printf("Output float: %f\n", output);
     }
     
 free_output_buf:
@@ -315,10 +320,6 @@ int main(int argc, char **argv)
 
 destroy_axidma:
     axidma_destroy(axidma_dev);
-close_output:
-    assert(close(trans.output_fd) == 0);
-close_input:
-    assert(close(trans.input_fd) == 0);
 ret:
     return rc;
 }
