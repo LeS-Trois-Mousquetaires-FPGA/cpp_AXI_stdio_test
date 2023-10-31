@@ -181,7 +181,7 @@ static int transfer_from_stdio(axidma_dev_t dev, struct dma_transfer *trans)
     char *output_bytes = (char *)malloc(trans->output_size * sizeof(float));
     memcpy(output_bytes, trans->output_buf, trans->output_size);
     for (size_t i = 0; i < size; i++) {
-        printf("Output Byte %zu: %02x\n", i, (char *)trans->output_buf[i] & 0xff);
+        printf("Output Byte %zu: %02x\n", i, output_bytes[i] & 0xff);
     }
     
 free_output_buf:
