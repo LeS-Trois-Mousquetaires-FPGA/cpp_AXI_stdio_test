@@ -270,7 +270,7 @@ int main(int argc, char **argv)
     if (axidma_dev == NULL) {
         fprintf(stderr, "Error: Failed to initialize the AXI DMA device.\n");
         rc = 1;
-        goto close_output;
+        goto ret;
     }
 
     // Get the size of the input file
