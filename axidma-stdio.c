@@ -129,6 +129,7 @@ static int transfer_from_stdio(axidma_dev_t dev, struct dma_transfer *trans)
     int rc;
     float input;
     char *bytes = (char *)malloc(MAX_FLOATS * sizeof(float));
+    
     size_t size = 0;
     int result;
 
@@ -165,7 +166,7 @@ static int transfer_from_stdio(axidma_dev_t dev, struct dma_transfer *trans)
         goto free_input_buf;
     }
 
-    memcpy(trans->input_buf, bytes, sizeof(size));
+    memcpy(trans->input_buf, bytes, trans->input_size);
     for (size_t i = 0; i < size; i++) {
         printf("Input Byte %zu: %02x\n", i, bytes[i] & 0xff);
     }
@@ -177,7 +178,8 @@ static int transfer_from_stdio(axidma_dev_t dev, struct dma_transfer *trans)
         fprintf(stderr, "DMA read write transaction failed.\n");
         goto free_output_buf;
     }
-
+    char *output_bytes = (char *)malloc(trans->output_size * sizeof(float));
+    memcpy(output_bytes, trans->output_buf, trans->output_size)
     for (size_t i = 0; i < size; i++) {
         printf("Output Byte %zu: %02x\n", i, (char *)trans->output_buf[i] & 0xff);
     }
